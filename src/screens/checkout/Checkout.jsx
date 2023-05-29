@@ -295,7 +295,7 @@ const Checkout = () => {
         } else if (orderData.paymentMethod === "card") {
           try {
             let { data } = await axios.post(
-              `${process.env.REACT_APP_API_URL}api/v1/orderStripe//create-checkout-session`,
+              `${process.env.REACT_APP_API_URL}api/v1/orderStripe/create-checkout-session`,
               {
                 items: itemsToSend,
                 shipping: {
