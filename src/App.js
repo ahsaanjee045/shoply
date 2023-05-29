@@ -73,7 +73,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route
           path="/checkout"
-          element={!user ? <Navigate to={"/login"} /> : user && cart?.items.length > 0 ? <Checkout/>  : <Navigate to="/products"/>}
+          element={!user ? <Navigate to={"/login"} /> : user && cart?.items?.length > 0 ? <Checkout/>  : <Navigate to="/products"/>}
         />
         <Route path="/checkout/success" element={<Confirmation />} />
         <Route path="*" element={<PageNotFound />} />
