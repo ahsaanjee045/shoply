@@ -13,7 +13,22 @@ const initialState = {
 export const createUser = createAsyncThunk("user/createUser", async (user) => {
    try {
     let res = await axios.post(`${process.env.REACT_APP_API_URL}api/v1/user/register`, user)
-    return res.data;
+    if(res.status === 201){
+        let response = await axios.post(`${process.env.REACT_APP_API_URL}api/v1/cart/createCart`, {}, {
+            headers :{
+                authorization : `Bearer ${res.data.token}`
+            }
+        })
+
+        if(response.status === 201){
+            return res.data;
+        }else{
+            throw new Error("Error while creating cart")
+        }
+    }else{
+        throw new Error("Error while registering user")
+    }
+    
    } catch (error) {
     throw new Error(error.response.data.message);
    }
