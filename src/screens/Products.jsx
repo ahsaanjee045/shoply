@@ -136,7 +136,7 @@ const NewProducts = () => {
                 onChange={handlePriceChange}
                 valueLabelDisplay="auto"
                 step={1000}
-                max={200000}
+                max={80000}
               />
               {/* <FormGroup>
                 <FormControlLabel

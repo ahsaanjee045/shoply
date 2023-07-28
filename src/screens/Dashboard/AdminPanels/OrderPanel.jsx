@@ -17,7 +17,7 @@ const OrderPanel = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    user && dispatch(fetchAllOrders(user.token))
+    user && dispatch(fetchAllOrders(user?.token))
   }, [])
 
   
@@ -40,7 +40,7 @@ const OrderPanel = () => {
     setCurrentPage(value);
   };
 
-  const paginatedResult = orders && paginate(orders, currentPage - 1, pageSize);
+  const paginatedResult = orders?.length > 0 && paginate(orders, currentPage - 1, pageSize);
 
   return (
     <Box
@@ -63,7 +63,7 @@ const OrderPanel = () => {
             alignItems={"center"}
           >
             <Pagination
-              count={Math.ceil(orders.length / pageSize)}
+              count={Math.ceil(orders?.length / pageSize)}
               color="primary"
               page={currentPage}
               onChange={handlePageChange}

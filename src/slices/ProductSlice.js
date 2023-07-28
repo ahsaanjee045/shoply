@@ -10,7 +10,7 @@ const initialState = {
   filteredProducts: [],
   searchQuery: "",
   selectedCategories: [],
-  priceRange: { min: 0, max: 2000000 },
+  priceRange: { min: 0, max: 80000 },
 };
 
 export const fetchProducts = createAsyncThunk(
