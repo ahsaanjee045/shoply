@@ -16,6 +16,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../styles/Button";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import Counter from "../components/Counter";
+import { FaWhatsapp } from "react-icons/fa";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
+import {
+  FacebookShareButton,
+  WhatsappShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  WhatsappIcon,
+  TwitterIcon,
+} from "react-share";
+import { addToWishList } from "../slices/wishListSlice";
+
 
 const SingleProduct = () => {
   const { _id } = useParams();
@@ -28,12 +41,12 @@ const SingleProduct = () => {
   const [customerReview, setCustomerReview] = useState("");
 
   const handleReview = () => {
-    if(customerReview && customerRating){
+    if (customerReview && customerRating) {
       dispatch(createReview({
-        productId : product?._id,
-        message : customerReview,
-        rating : customerRating,
-        token : user?.token
+        productId: product?._id,
+        message: customerReview,
+        rating: customerRating,
+        token: user?.token
       }))
       setCustomerReview("")
       setCustomerRating(0)
@@ -61,6 +74,37 @@ const SingleProduct = () => {
       navigate("/login");
     }
   };
+  const handleAddToWishlist = () => {
+    if (user) {
+      let wishlistItem = {
+        productId: product?._id,
+        productName: product?.name,
+        productImage: product?.image,
+        price: parseInt(product?.price),
+        countInStock: parseInt(product?.countInStock),
+      };
+
+      dispatch(addToWishList({ token: user.token, product: wishlistItem }));
+    } else {
+      navigate("/login");
+    }
+  };
+  // const handleAddToWishList = () => {
+  //   if (user) {
+  //     let wishListItem = {
+  //       productId: product?._id,
+  //       productName: product?.name,
+  //       productImage: product?.image,
+  //       countInStock: parseInt(product?.countInStock),
+  //       price: parseInt(product?.price),
+  //       qty: parseInt(qty),
+  //     };
+
+  //     dispatch(addTowishList({ token: user.token, product: cartItem }));
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   /* ------------------------- This is the start of cart button component *****************************/
   const CartButton = () => {
@@ -80,8 +124,14 @@ const SingleProduct = () => {
       >
         Add To Cart <ShoppingBagOutlinedIcon style={{ marginBottom: "5px" }} />
       </Button>
+
+
+
     );
   };
+
+
+  const owner_phone_number = 8219328779
 
   /* ------------------------- This is the end of cart button component *****************************/
 
@@ -178,17 +228,98 @@ const SingleProduct = () => {
           </Box>
           <Box>
             {product?.countInStock > 0 ? (
-              <Box display={"flex"} alignItems={"center"} mt={"30px"} gap={2}>
-                <CartButton />
-                <Counter
-                  qty={qty}
-                  setQty={setQty}
-                  countInStock={product?.countInStock}
-                />
-              </Box>
+              <>
+                <Box display={"flex"} alignItems={"center"} mt={"30px"} gap={2}>
+                  <CartButton />
+                  <Counter
+                    qty={qty}
+                    setQty={setQty}
+                    countInStock={product?.countInStock}
+                  />
+                </Box>
+                <Button
+                  style={{
+                    marginTop: "20px",
+                    backgroundColor: "#4B3049",
+                    fontSize: "16px",
+                    textTransform: "capitalize",
+                    fontWeight: "500",
+                    fontFamily: "'Jost', sans-serif",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "13px",
+                  }}
+                  onClick={handleAddToWishlist}
+                >
+                  Add To wishlist <FavoriteBorderIcon style={{ marginBottom: "5px" }} />
+                </Button>
+              </>
             ) : (
               <Typography>Out of Stock</Typography>
             )}
+
+
+            <Box sx={{ marginTop: "20px" }}>
+              <Button
+                onClick={() => {
+                  const url = `https://api.whatsapp.com/send?phone=${owner_phone_number}&text=I'm interested in your ${product?.name} product.`;
+                  window.open(url, "_blank");
+                }}
+                variant="contained"
+                sx={{
+                  color: "white",
+                  bgcolor: "green.idle",
+                  "&:hover": {
+                    bgcolor: "green.main",
+                  },
+                }}
+              >
+                <FaWhatsapp
+                  style={{
+                    fontSize: "20px",
+                    marginRight: "10px",
+                  }}
+                />
+                Buy on WhatsApp
+              </Button>
+            </Box>
+
+            <Box
+              display={"flex"}
+              gap={"10px"}
+              mt={4}
+              borderBottom={"1px solid #e2e2e2"}
+              pb={"20px"}
+            >
+              Share :{" "}
+              <FacebookShareButton
+                url={window.location.href}
+                windowHeight={"800px"}
+                windowWidth={"800px"}
+                windowPosition="windowCenter"
+
+              >
+                <FacebookIcon round={true} size={"25px"} />
+              </FacebookShareButton>
+              <WhatsappShareButton
+                url={window.location.href}
+                windowHeight={"800px"}
+                windowWidth={"800px"}
+                windowPosition="windowCenter"
+                separator="--"
+                title={product?.name}
+              >
+                <WhatsappIcon round={true} size={"25px"} />
+              </WhatsappShareButton>
+              <TwitterShareButton
+                url={window.location.href}
+                windowHeight={"800px"}
+                windowWidth={"800px"}
+                windowPosition="windowCenter"
+              >
+                <TwitterIcon round={true} size={"25px"} />
+              </TwitterShareButton>
+            </Box>
           </Box>
         </Grid>
       </Grid>
@@ -198,10 +329,7 @@ const SingleProduct = () => {
             xs: "15px",
             md: "20px",
           },
-          // paddingInline: {
-          //   xs: "30px",
-          //   lg: "50px",
-          // },
+
           paddingBlock: {
             xs: "10px",
             lg: "20px",

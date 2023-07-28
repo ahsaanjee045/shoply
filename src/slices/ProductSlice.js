@@ -205,7 +205,6 @@ export const {
 export default productSlice.reducer;
 
 
-
 // import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 // import axios from "axios";
 // import { filterByCategory, filterPrice, searching } from "../utils/utils";

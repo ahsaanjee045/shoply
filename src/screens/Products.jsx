@@ -62,22 +62,22 @@ const NewProducts = () => {
     const { value, checked } = event.target;
     const updatedCategories = checked
       ? [...selectedCategories, value]
-      : selectedCategories.filter((category) => category !== value);
+      : selectedCategories?.filter((category) => category !== value);
     dispatch(setSelectedCategories(updatedCategories));
   };
 
   const handlePriceChange = (e, value) => {
     // console.log(value)
     setRange(value)
-    dispatch(setPriceRange({min : value[0], max : value[1]}));
+    dispatch(setPriceRange({ min: value[0], max: value[1] }));
   };
 
   const handleClearFilter = () => {
     dispatch(setSearchQuery(""))
-    dispatch(setPriceRange({min : 0, max : 200000}))
+    dispatch(setPriceRange({ min: 0, max: 200000 }))
     dispatch(setSelectedCategories([]))
     dispatch(filterProducts());
-    setRange([0,  200000]);
+    setRange([0, 200000]);
 
   };
   const paginatedProducts = paginate(filteredProducts, currentPage - 1, pageSize);
@@ -227,7 +227,7 @@ const NewProducts = () => {
               columnGap={2}
               rowGap={3}
               mt={3}
-              // justifyContent={"center"}
+            // justifyContent={"center"}
             >
               {paginatedProducts &&
                 paginatedProducts.map((product) => (
@@ -279,8 +279,6 @@ const Wrapper = styled.section`
 export default NewProducts;
 
 
-
-
 // import React, { useEffect, useState } from "react";
 
 // import BreadcrumbPart from "../components/BreadcrumbPart";
@@ -308,13 +306,14 @@ export default NewProducts;
 // const Products = () => {
 //   const title = "Products";
 //   const dispatch = useDispatch()
+//   const [selectedOption, setSelectedOption] = useState("");
 //   const [pageSize, setPageSize] = useState(6);
 //   const [currentPage, setCurrentPage] = useState(1);
 //   const [keyword, setKeyword] = useState("");
 //   const { products } = useSelector((state) => state.productstate);
 //   const [priceRange, setPriceRange] = useState(0);
 //   const [selectedCategories, setSelectedCategories] = useState([])
-//   // const [count, setCount] = useState(0)
+//   const [count, setCount] = useState(0)
 
 
 //   const handlePriceChange = (e, value) => {

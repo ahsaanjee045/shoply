@@ -7,6 +7,10 @@ import {
   Button as MuiButton,
   TextField,
   Switch,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { Button } from "../styles/Button";
 import { useSelector, useDispatch } from "react-redux";
@@ -267,7 +271,7 @@ const ProductPanelItem = ({ product }) => {
             />
           </Box>
           <Box display={"flex"} gap={3} mb={2}>
-            <TextField
+            {/* <TextField
               variant="outlined"
               value={formData.category}
               onChange={(e) =>
@@ -281,7 +285,26 @@ const ProductPanelItem = ({ product }) => {
               sx={{
                 width: "50%",
               }}
-            />
+            /> */}
+            <FormControl sx={{width : "50%"}} size="small">
+              <InputLabel>Category</InputLabel>
+              <Select
+                value={formData.category}
+                label="Category"
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    category: e.target.value,
+                  })
+                }}
+              >
+                {/* "Mobile Phones", "PCs and Laptops", "Watches", "Cameras" */}
+                <MenuItem value={"Mobile Phones"}>Mobile Phones</MenuItem>
+                <MenuItem value={"PCs and Laptops"}>PCs and Laptops</MenuItem>
+                <MenuItem value={"Watches"}>Watches</MenuItem>
+                <MenuItem value={"Cameras"}>Cameras</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               variant="outlined"
               placeholder="Brand"

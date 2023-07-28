@@ -7,6 +7,10 @@ import {
   Button as MuiButton,
   TextField,
   Switch,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -29,7 +33,6 @@ const style = {
   p: 4,
 };
 
-
 const initialState = {
   name: "",
   price: 0,
@@ -39,10 +42,10 @@ const initialState = {
   countInStock: 0,
   image: "",
   featured: false,
-}
+};
 
 const ProductPanel = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productstate);
   const { user } = useSelector((state) => state.userstate);
   const [open, setOpen] = React.useState(false);
@@ -63,16 +66,18 @@ const ProductPanel = () => {
       formData.description &&
       formData.image
     ) {
-      dispatch(addProduct({
-        formData : {
-          ...formData, 
-          price : parseInt(formData.price),
-          countInStock : parseInt(formData.countInStock),
-        }, 
-        token : user.token
-      }))
+      dispatch(
+        addProduct({
+          formData: {
+            ...formData,
+            price: parseInt(formData.price),
+            countInStock: parseInt(formData.countInStock),
+          },
+          token: user.token,
+        })
+      );
       handleClose();
-      setFormData(initialState)
+      setFormData(initialState);
     }
   };
 
@@ -218,7 +223,7 @@ const ProductPanel = () => {
             />
           </Box>
           <Box display={"flex"} gap={3} mb={2}>
-            <TextField
+            {/* <TextField
               variant="outlined"
               value={formData.category}
               onChange={(e) =>
@@ -232,7 +237,26 @@ const ProductPanel = () => {
               sx={{
                 width: "50%",
               }}
-            />
+            /> */}
+            <FormControl sx={{width : "50%"}} size="small">
+              <InputLabel>Category</InputLabel>
+              <Select
+                value={formData.category}
+                label="Category"
+                onChange={(e) => {
+                  setFormData({
+                    ...formData,
+                    category: e.target.value,
+                  })
+                }}
+              >
+                {/* "Mobile Phones", "PCs and Laptops", "Watches", "Cameras" */}
+                <MenuItem value={"Mobile Phones"}>Mobile Phones</MenuItem>
+                <MenuItem value={"PCs and Laptops"}>PCs and Laptops</MenuItem>
+                <MenuItem value={"Watches"}>Watches</MenuItem>
+                <MenuItem value={"Cameras"}>Cameras</MenuItem>
+              </Select>
+            </FormControl>
             <TextField
               variant="outlined"
               placeholder="Brand"

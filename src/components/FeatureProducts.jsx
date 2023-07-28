@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProducts } from "../slices/ProductSlice";
 import { useEffect } from "react";
 import Item from "./Item";
+import { Link } from "react-router-dom";
+import { Button } from "../styles/Button";
+import { Box, Typography } from "@mui/material";
+import { GridLoader } from "react-spinners";
+
 
 const FeatureProducts = () => {
   const { products, loading, error } = useSelector(
@@ -20,12 +25,27 @@ const FeatureProducts = () => {
     <Wrapper>
       <div className="container">
         {/* <div className="intro-data">Check Now!</div> */}
-        <h2 className="common-heading">Trending Items</h2>
+        <h2 className="common-heading">Featured Products</h2>
         {loading ? (
-          <h1>loading....</h1>
+          <Box sx={{
+            minHeight: "60vh",
+            display: "grid",
+            placeContent: "center"
+          }}>
+            <GridLoader
+              color="#4b3049"
+              size={19}
+            />
+          </Box>
+        ) : error ? (
+          <Box>
+            <Typography textAlign="center" >
+              {error}
+            </Typography>
+          </Box>
         ) : (
           <div className="grid grid-three-column">
-            {products?.filter(product => product.featured === true).map((product) => (
+            {products?.filter(product => product.featured === true)?.slice(0, 4)?.map((product) => (
               <Item
                 name={product.name}
                 brand={product.brand}
@@ -36,17 +56,29 @@ const FeatureProducts = () => {
                 description={product.description}
                 image={product.image}
                 price={product.price}
-              /> 
-            )) }
+              />
+            ))}
           </div>
+
         )}
       </div>
+      {
+        !loading && !error && products && <Box sx={{
+          textAlign: "center",
+          mt: "40px"
+        }}>
+          <Link to="/products">
+            <Button>Shop More</Button>
+          </Link>
+        </Box>
+      }
     </Wrapper>
+
   );
 };
 
 
- 
+
 
 const Wrapper = styled.section`
   padding: 4rem 0 5rem;

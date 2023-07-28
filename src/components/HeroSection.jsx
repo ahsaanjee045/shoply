@@ -11,29 +11,29 @@ const HeroSection = () => {
       <div className="
       hero-section-data">
         <p className="intro-data">Welcome to </p>
-        <h1 > Shoply </h1>
+        <h1 > ShopZone </h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          atque temporibus veniam doloribus libero ad error omnis voluptates
-          animi! Suscipit sapiente.
+        Discover endless possibilities. Shop the latest trends. Find your perfect style.
+         Experience seamless shopping. 
         </p>
         <Link to="/products">
           <Button>show now</Button>
         </Link>
       </div>
       {/* our homepage image  */}
-      <div className="hero-section-image">
+      <div  className="hero-section-image">
         <figure>
           <img
-            src="https://teensmakehealthhappen.org/wp-content/uploads/2022/02/pexels-gustavo-fring-3985062-scaled.jpg"
+            src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80"
             alt="hero-section-family"
-            className="img-style"
-          />
+            className='hero-section-data '
+         />
         </figure>
       </div>
     </div>
   </div>
   </Wrapper>
+  
   )
 }
 
@@ -41,13 +41,14 @@ const Wrapper = styled.section`
   padding: 10rem 0 5rem;
  
   img {
-    min-width: 10rem;
-    height: 10rem;
+    width: 100%;
+    height:autp;
   }
 
   .hero-section-data {
     p {
       margin: 1rem 0;
+      font-weight: bolder;
     
     }
 
@@ -100,12 +101,13 @@ const Wrapper = styled.section`
       height: 100%;
       left: 0;
       top: 10%;
-      /* bottom: 10%; */
+      // bottom: 10%; 
       background-color: #4B3049;
     }
   }
 
-
  `;
 
 export default HeroSection
+
+// https://teensmakehealthhappen.org/wp-content/uploads/2022/02/pexels-gustavo-fring-3985062-scaled.jpg

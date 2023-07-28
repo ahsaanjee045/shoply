@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../slices/userSlice";
 import { fetchCartItems } from "../slices/CartSlice";
 import { Badge } from "@mui/material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 function ScrollTop(props) {
   const { children, window } = props;
@@ -65,6 +66,10 @@ function Navbar(props) {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.userstate);
   const { totalQty } = useSelector((state) => state.cartState);
+  const { wishList } = useSelector((state) => state.wishLishState);
+
+  console.log(wishList)
+
   const dispatch = useDispatch();
 
   const handleCartNavigation = () => {
@@ -75,20 +80,15 @@ function Navbar(props) {
     }
   };
 
+  const handleWishlistNavigation = () => {
+    if (user) {
+      navigate("/wishlist");
+    } else {
+      navigate("/login");
+    }
+  };
+
   const pages = [
-    user?.isAdmin && (
-      <Link
-        to="/dashboard"
-        style={{
-          textDecoration: "none",
-          color: "#4B3049",
-          fontWeight: "500",
-          fontSize: "0.9rem",
-        }}
-      >
-        Dashboard
-      </Link>
-    ),
     <Link
       to="/products"
       style={{
@@ -100,7 +100,7 @@ function Navbar(props) {
     >
       Products
     </Link>,
-    
+
     <Link
       to="/about"
       style={{
@@ -115,19 +115,7 @@ function Navbar(props) {
   ];
 
   const settings = [
-    user ? (
-      <Link
-        to="/account"
-        style={{
-          textDecoration: "none",
-          color: "#4B3049",
-          fontWeight: "400",
-          fontSize: "1.6rem",
-        }}
-      >
-        My Account
-      </Link>
-    ) : null,
+
     user ? (
       <Link
         style={{
@@ -209,7 +197,7 @@ function Navbar(props) {
                 // textDecoration: 'none',
               }}
             >
-              Shoply
+              ShopZone
             </Typography>
             {/* </Link> */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -288,6 +276,30 @@ function Navbar(props) {
                 gap: "50px",
               }}
             >
+              {
+                user?.isAdmin && (
+                  <Button
+                    onClick={handleCloseNavMenu}
+                    sx={{
+                      my: 2,
+                      color: "white",
+                      display: "block",
+                      fontSize: "1.4rem",
+                    }}>
+
+                    <Link
+                      to="/dashboard"
+                      style={{
+                        textDecoration: "none",
+                        color: "#4B3049",
+                        fontWeight: "500",
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      Dashboard
+                    </Link>
+                  </Button>)
+              }
               {pages.map((page, index) => (
                 <Button
                   key={index}
@@ -304,7 +316,19 @@ function Navbar(props) {
               ))}
             </Box>
 
+
+
             <Box sx={{ flexGrow: 0 }}>
+              <IconButton
+                sx={{ p: 0, marginRight: "20px", color: "#4B3049" }}
+                color="#4B3049 "
+                size="large"
+                onClick={handleWishlistNavigation}
+              >
+                <Badge badgeContent={wishList?.items?.length} color="secondary">
+                  <FavoriteBorderIcon sx={{ fontSize: "1.85rem" }} />
+                </Badge>
+              </IconButton>
               <IconButton
                 sx={{ p: 0, marginRight: "20px", color: "#4B3049" }}
                 color="#4B3049 "

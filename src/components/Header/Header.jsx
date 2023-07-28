@@ -32,20 +32,13 @@ function Header() {
             ECOM
           </Navbar.Brand>
           <Nav className="ms-auto">
-            {/* <Nav.Link
-              style={{ color: "white" }}
-              as={Link}
-              className="mx-4"
-              to="/"
-            >
-              Home
-            </Nav.Link> */}
+            
             <Nav.Link
               style={{ color: "white" }}
               className="mx-1"
               href="#features"
             >
-               <Badge  badgeContent={4} color="primary">
+               <Badge badgeContent={4} color="primary">
                   <ShoppingCartIcon/>
                 </Badge>
             </Nav.Link>
@@ -87,5 +80,4 @@ function Header() {
     </>
   );
 }
-
 export default Header;
